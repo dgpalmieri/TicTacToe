@@ -4,6 +4,7 @@
 # Main game functions for 5x5 Tic-Tac-Toe
 
 import ai
+from time import localtime, strftime
 
 
 def print_board(board):
@@ -68,7 +69,7 @@ def check_win(board):
     return ' '
 
 
-def game(board):
+def game(board, path=""):
     print("Would you like to play against:")
     print("[1] A human player.")
     print("[2] An AI player.")
@@ -79,6 +80,8 @@ def game(board):
         if (player == '4'):
             return -1
         print("Please choose again.")
+
+    board_list = []
 
     empty_board = []
     for _ in range(25):
@@ -129,16 +132,29 @@ def game(board):
     turn = 'X'
 
     while(True):
+        board_list.append(board)
         print("This is the current board state:")
         print_board(board)
         print("It is \'{}\' player's move:".format(turn))
-        if (turn == 'O' and player == '2'):
-            ai.AI_move(board)
-            sleep(1)
-        elif (player == '3'):
+        if (turn == 'O' and player == '2' or player == '3'):
             ai.AI_move(board)
             sleep(1)
         else:
+            save = input("Would you like to save the game and quit? y/n ")
+            if (save.lower() == 'y'):
+                if (path == ""):
+                    path = "tictactoe "
+                    path.append(strftime("%Y-%m-%d %H:%M:%S", localtime()))
+
+                with open(path, "a") as fout:
+                    for elem in board_list:
+                        fout.write(board)
+                print("Your game has been saved as {}".format(path))
+                return 2
+            elif (save.lower() == 'n'):
+                pass
+            else:
+                continue
             print("Where would you like to place your \'{}\'?".format(turn))
             print("Format your move as a number between 1 and 25, ", end="")
             print("with 1 being the top left square and 25 the bottom right.")
