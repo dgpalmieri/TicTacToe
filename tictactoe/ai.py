@@ -6,12 +6,12 @@
 from random import randint
 
 
-def AI_move(board):
+def AI_move(board, turn):
     num = randint(0, 24)
 
     while(board[num] != ' '):
         num = randint(0, 24)
 
-    board[num] = 'O'
+    board[num] = turn
 
     return
