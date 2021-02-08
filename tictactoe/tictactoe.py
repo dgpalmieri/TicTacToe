@@ -7,6 +7,34 @@ import ai
 import game as g
 
 
+def read_file(board, path):
+    path = input("Please enter the absolute path of the game file: ")
+    state = ""
+    with open(path, "r") as fin:
+        for line in fin:
+            pass
+        state = line
+
+    for i in range(25):
+        board[i] = state[i]
+
+    return path
+
+
+def replay_game():
+    path = input("Please enter the absolute path of the game file: ")
+    board = []
+    for _ in range(25):
+        board.append(' ')
+    with open(path, "r") as fin:
+        for line in fin:
+            for i in range(25):
+                board[i] = line[i]
+            print_board(board)
+            sleep(1)
+    return
+
+
 def main():
     game = input("Hello. Would you like to play a game? y/n: ")
     if (game.lower() == 'y'):
@@ -19,21 +47,33 @@ def main():
             print("[4] Exit the game.")
             option = input("Choose an option 1/2/3/4: ")
 
-            if (option == '1'):
-                board = []
-                for _ in range(25):
-                    board.append(" ")
+            board = []
+            for _ in range(25):
+                board.append(" ")
+
+            if (option == '1'):  # play a new game
                 exit = g.game(board)
                 if (exit == -1):
                     break
                 if (exit == 1):
                     continue
-            elif (option == '2'):
-                pass
-            elif(option == '3'):
-                pass
+
+            elif (option == '2'):  # start a saved game
+                path = read_file(board)
+                exit = g.game(board, path)
+                if (exit == -1):
+                    break
+                if (exit == 1):
+                    continue
+
+            elif(option == '3'):  # watch a previous game
+                replay_game(board)
+                print("End of File reached.")
+                continue
+
             elif (option == '4'):
                 break
+
             else:
                 option = input("Please choose a valid option,\
                                either 1, 2, 3, or 4:")
