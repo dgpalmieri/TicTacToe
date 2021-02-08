@@ -5,9 +5,10 @@
 
 import ai
 import game as g
+from time import sleep
 
 
-def read_file(board, path):
+def read_file(board):
     path = input("Please enter the absolute path of the game file: ")
     state = ""
     with open(path, "r") as fin:
@@ -30,7 +31,7 @@ def replay_game():
         for line in fin:
             for i in range(25):
                 board[i] = line[i]
-            print_board(board)
+            g.print_board(board)
             sleep(1)
     return
 
@@ -67,7 +68,7 @@ def main():
                     continue
 
             elif(option == '3'):  # watch a previous game
-                replay_game(board)
+                replay_game()
                 print("End of File reached.")
                 continue
 
