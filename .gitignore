@@ -1,1 +1,5 @@
 venv/
+
+tictactoe/__pycache__/
+
+plan.md
