@@ -67,9 +67,12 @@ def check_win(board):
             return board[i]
 
     # Possible draw
+    draw = True
     for char in board:
         if (char == ' '):
-            continue
+            draw = False
+
+    if draw:
         return "draw"
 
     return ' '
@@ -134,8 +137,13 @@ def game(board, path=""):
                     print("Where would you like to place your \'O\'? ")
                     print("Format your move as a number between 1 ", end="")
                     print("and 25, with 1 being the top left square ", end="")
-                    print("and 25 being the bottom right.")
+                    print("and 25 being the bottom right. If you ", end="")
+                    print("would like to save and quit, please ", end="")
+                    print("enter \'wq\'")
                     move = input("Please enter your move: ")
+                    if (move == "wq"):
+                        save_game(path, board_list)
+                        return 2
                     move = int(move)
 
                     if (move > 0 and move < 26 and board[move] != 'X' and
@@ -158,18 +166,16 @@ def game(board, path=""):
             ai.AI_move(board, turn)
             sleep(1)
         else:
-            save = input("Would you like to save the game and quit? y/n ")
-            if (save.lower() == 'y'):
-                save_game(path, board_list)
-                return 2
-            elif (save.lower() == 'n'):
-                pass
-            else:
-                continue
             print("Where would you like to place your \'{}\'?".format(turn))
             print("Format your move as a number between 1 and 25, ", end="")
-            print("with 1 being the top left square and 25 the bottom right.")
+            print("and 25 being the bottom right. If you ", end="")
+            print("would like to save and quit, please ", end="")
+            print("enter \'wq\'")
             move = input("Please enter your move: ")
+            if (move == "wq"):
+                save_game(path, board_list)
+                return 2
+
             move = int(move)-1
             if (move >= 0 and move <= 24 and board[move] != 'X' and
                     board[move] != 'O'):
@@ -195,4 +201,3 @@ def game(board, path=""):
         if (save.lower() == 'y'):
             save_game(path, board_list)
         return
-
