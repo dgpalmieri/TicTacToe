@@ -8,7 +8,7 @@ from time import localtime, strftime, sleep
 
 
 def print_board(board):
-    if (len(board) < 25):
+    if len(board) < 25:
         print("Something's wrong with the board. len() < 25")
         return
 
@@ -69,7 +69,7 @@ def check_win(board):
     # Possible draw
     draw = True
     for char in board:
-        if (char == ' '):
+        if char == ' ':
             draw = False
 
     if draw:
@@ -98,8 +98,8 @@ def game(board, path=""):
         print("[3] I'd like to watch two AI players play.")
         print("[4] Exit the game.")
         player = input("Please choose either 1, 2, 3, or 4: ")
-        if (player != "1" and player != "2" and player != "3"):
-            if (player == "4"):
+        if player != "1" and player != "2" and player != "3":
+            if player == "4":
                 return -1
             print("Please choose again.")
             continue
@@ -111,24 +111,24 @@ def game(board, path=""):
     for _ in range(25):
         empty_board.append(" ")
 
-    if (board != empty_board):
+    if board != empty_board:
         turn = 0
         for char in board:
-            if (char == 'X'):
+            if char == 'X':
                 turn += 1
-            elif (char == 'O'):
+            elif char == 'O':
                 turn -= 1
 
-        if (turn == 0):
+        if turn == 0:
             turn = 'X'
-        elif (turn == -1):
+        elif turn == -1:
             turn = 'O'
 
-        print("Based on the state of the board, I can see that", end="")
+        print("Based on the state of the board, I can see that ", end="")
         print("it is {}'s turn.".format(turn))
 
-        if (turn == 'O'):
-            if (player == '2'):
+        if turn == 'O':
+            if player == '2':
                 print("AI move:")
                 ai.AI_move(board)
             else:
@@ -141,7 +141,7 @@ def game(board, path=""):
                     print("would like to save and quit, please ", end="")
                     print("enter \'wq\'")
                     move = input("Please enter your move: ")
-                    if (move == "wq"):
+                    if move == "wq":
                         save_game(path, board_list)
                         return 2
                     move = int(move)
@@ -162,7 +162,7 @@ def game(board, path=""):
         print("This is the current board state:")
         print_board(board)
         print("It is \'{}\' player's move:".format(turn))
-        if ((turn == 'O' and player == '2') or player == '3'):
+        if (turn == 'O' and player == '2') or player == '3':
             ai.AI_move(board, turn)
             sleep(1)
         else:
@@ -183,21 +183,21 @@ def game(board, path=""):
             else:
                 print("Please enter a valid move.")
                 continue
-        if (turn == 'X'):
+        if turn == 'X':
             turn = 'O'
         else:
             turn = 'X'
 
         winner = check_win(board)
-        if (winner == 'X' or winner == 'O'):
+        if winner == 'X' or winner == 'O':
             print("We have a winner! \'{}\' wins!".format(winner))
             print_board(board)
-        elif (winner == "draw"):
+        elif winner == "draw":
             print("It's a draw!")
         else:
             continue
 
         save = input("Would you like to save the game? y/n ")
-        if (save.lower() == 'y'):
+        if save.lower() == 'y':
             save_game(path, board_list)
         return
