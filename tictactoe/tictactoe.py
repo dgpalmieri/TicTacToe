@@ -57,6 +57,7 @@ def main():
     """
     while True:
         board = []
+        path = ""
         for _ in range(25):
             board.append(' ')
 
