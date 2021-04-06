@@ -1,4 +1,4 @@
-# Tic-Tac-Toe
+# Tic-Tac-Toe-MM
 A python implementation of 5x5 Tic-Tac-Toe, with an AI Opponent that
 utilizes the Minimax algorithm with Alpha-Beta pruning.
 
