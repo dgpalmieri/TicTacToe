@@ -82,19 +82,20 @@ def main():
             print("End of File reached.")
             continue
 
-        print("Would you like to play against:")
-        print("[1] A human player.")
-        print("[2] An AI player.")
-        print("[3] I'd like to watch two AI players play.")
-        print("[4] Exit the game.")
-        player = input("Please choose either 1, 2, 3, or 4: ")
-        if player not in ('1', '2', '3'):
-            if player == "4":
-                break
-            print("Please choose again.")
-            continue
+        if option != '4':
+            print("Would you like to play against:")
+            print("[1] A human player.")
+            print("[2] An AI player.")
+            print("[3] I'd like to watch two AI players play.")
+            print("[4] Exit the game.")
+            player = input("Please choose either 1, 2, 3, or 4: ")
+            if player not in ('1', '2', '3'):
+                if player == "4":
+                    break
+                print("Please choose again.")
+                continue
 
-        game(board, path, player)
+            game(board, path, player)
 
     print("Goodbye.")
 
