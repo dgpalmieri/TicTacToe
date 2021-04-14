@@ -12,27 +12,48 @@ workhorse function.
 
 from math import inf
 from random import randint
+from datetime import now
 import game
 
 boards = 0
 
 
 class Node:
-    wins = 0
-    games = 0
+    wins = 0.0
+    games = 0.0
+    move = ''
+    board = []
+    player_id = ''
     children = []
+
+    def __init__(self, board, player_id):
+        self.board = board
+        self.player_id = player_id
 
     def get_children():
         return self.children
 
 
-def mcts(board, player_id, depth, maximize, alpha=-inf, beta=-inf) -> (int, int):
+def mcts(node, time, start) -> (int, int):
     """
     # mcts
 
     This function implements a Monte-Carlo Tree Search.
 
     """
+    best_score = -inf
+    best_move = 0
+    if now() >= start + time:
+        if node.get_children():
+            for child in node.get_children:
+                if child.wins / child.games > best_score:
+                    best_score = child.wins / child.games
+                    best_move = child.move
+            return (best_move, best_score)
+        else:
+            return None
+
+    return (0,0)
 
 
 def ai_move(board, player_id):
@@ -43,7 +64,8 @@ def ai_move(board, player_id):
     global boards
     boards = 0
 
-    move, _ = mcts(board, player_id, 6, True)
+    root = Node(board, player_id)
+    move, _ = mcts(root, 15, now())
 
     if move is None:
         move = randint(0, 24)
