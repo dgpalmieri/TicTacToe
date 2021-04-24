@@ -126,7 +126,7 @@ def game(board, path, player):
         num_x = board.count('X')
         num_o = board.count('O')
 
-        if num_x == num_o:
+        if num_x != num_o:
             turn = 'O'
 
     print("Based on the state of the board, I can see that ", end="")
