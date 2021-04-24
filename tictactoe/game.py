@@ -20,8 +20,8 @@ def print_board(board):
     This method, given a board, prints the board in the standard
     tic-tac-toe board format.
     """
-    if len(board) < 25:
-        print("Something's wrong with the board. len() < 25")
+    if len(board) != 25:
+        print("Something's wrong with the board. len() != 25")
         return
 
     print()
