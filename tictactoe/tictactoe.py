@@ -70,8 +70,7 @@ def main():
         option = input("Choose an option 1/2/3/4: ")
 
         if option not in ('1', '2', '3', '4'):
-            option = input("Please choose a valid option,\
-                           either 1, 2, 3, or 4:")
+            print("Please choose a valid option, either 1, 2, 3, or 4")
             continue
 
         if option == '2':  # start a saved game
@@ -81,6 +80,9 @@ def main():
             replay_game()
             print("End of File reached.")
             continue
+
+        if option == '4':
+            exit()
 
         if option != '4':
             print("Would you like to play against:")
