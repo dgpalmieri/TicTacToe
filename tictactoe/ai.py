@@ -35,7 +35,7 @@ class Node:
         return self.children
 
 
-def mcts(node) -> (int, int):
+def mcts(node):
     """
     # mcts
     This function implements a Monte-Carlo Tree Search.
@@ -44,7 +44,7 @@ def mcts(node) -> (int, int):
 
     if game.check_win(node.board):
         node.wins += 1
-        return node.move
+        return
 
     # Selection
     next_move = -1
@@ -71,17 +71,12 @@ def mcts(node) -> (int, int):
     mcts(next_node)
 
     # Back-Propogation
-    best_score = -inf
     best_move = -1
-    if time() >= start + time:
-        if node.get_children():
-            for child in node.get_children():
-                if child.wins / child.games > best_score:
-                    best_score = child.wins / child.games
-                    best_move = child.move
-        return best_move
-
-    return (0,0)
+    best_score = inf
+    if node.get_children():
+        for child in node.get_children():
+            node.games += child.games
+            node.wins  += child.games - child.wins
 
 
 def ai_move(board, player_id):
@@ -98,9 +93,18 @@ def ai_move(board, player_id):
     start = time.time()
     turn_length = 15
     while time.time() < start + turn_length:
-        move = mcts(root)
+        mcts(root)
+
+    best_score = inf
+    print(f"length of children: {len(root.children)}")
+    for child in root.children:
+        if child.wins / child.games < best_score:
+            best_move = child.move
+            best_score = child.wins / child.games
+
 
     if move == -1:
+        print("Random move")
         move = randint(0, 24)
 
     board[move] = player_id
