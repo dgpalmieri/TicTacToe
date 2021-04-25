@@ -12,6 +12,7 @@ workhorse function.
 
 from math import inf, sqrt, log
 from random import randint
+from copy import copy
 import time
 import game
 
@@ -31,7 +32,7 @@ class Node:
         self.player_id = player_id
         self.move = move
 
-    def get_children():
+    def get_children(self):
         return self.children
 
 
@@ -47,36 +48,34 @@ def mcts(node):
         return
 
     # Selection
-    next_move = -1
+    move = -1
     next_player = 'O' if node.player_id == 'X' else 'X'
-    next_board = copy(board)
+    next_board = copy(node.board)
     if node.get_children():
         max_uct = -inf
         for child in node.get_children():
             uct = child.wins/child.games + sqrt(log(node.games) / child.games)
             if uct > max_uct:
                 max_uct = uct
-                next_move = child.move
+                move = child.move
 
     # Expansion and Simulation
     else:
-        move = random(0, 24)
+        move = randint(0, 24)
         while node.board[move] != ' ':
-            move = random(0, 24)
+            move = randint(0, 24)
 
     next_board[move] = next_player
-    next_node = Node(next_board, next_player, next_move)
+    next_node = Node(next_board, next_player, move)
     node.children.append(next_node)
 
     mcts(next_node)
 
-    # Back-Propogation
-    best_move = -1
-    best_score = inf
+    # Back-Propagation
     if node.get_children():
         for child in node.get_children():
             node.games += child.games
-            node.wins  += child.games - child.wins
+            node.wins += child.games - child.wins
 
 
 def ai_move(board, player_id):
@@ -99,9 +98,8 @@ def ai_move(board, player_id):
     print(f"length of children: {len(root.children)}")
     for child in root.children:
         if child.wins / child.games < best_score:
-            best_move = child.move
+            move = child.move
             best_score = child.wins / child.games
-
 
     if move == -1:
         print("Random move")
