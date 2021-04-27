@@ -43,7 +43,7 @@ def mcts(node):
     """
     node.games += 1
 
-    if game.check_win(node.board):
+    if game.check_win(node.board) != ' ':
         node.wins += 1
         return
 
@@ -65,9 +65,9 @@ def mcts(node):
         while node.board[move] != ' ':
             move = randint(0, 24)
 
-    next_board[move] = next_player
+    next_board[move] = node.player_id
     next_node = Node(next_board, next_player, move)
-    node.children.append(next_node)
+    node.children.append(next_node)  # appends next_node to node.children and next_node.children
 
     mcts(next_node)
 

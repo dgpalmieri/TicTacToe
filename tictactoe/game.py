@@ -155,7 +155,7 @@ def game(board, path, player):
                 return
 
             move = int(move) - 1
-            if (0 <= move <= 24 and board[move] not in ('X', 'O')):
+            if 0 <= move <= 24 and board[move] not in ('X', 'O'):
                 board[move] = turn
             else:
                 print("Please enter a valid move.")
