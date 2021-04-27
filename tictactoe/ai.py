@@ -34,6 +34,9 @@ def mcts(node, expanding=False):
     # mcts
     This function implements a Monte-Carlo Tree Search.
     """
+    global boards
+    boards += 1
+
     node.games += 1
     if game.check_win(node.board) != ' ':
         if game.check_win(node.board) == 'X' or game.check_win(node.board) == 'O':
@@ -99,7 +102,6 @@ def ai_move(board, player_id):
     """
 
     global boards
-    boards = 0
 
     move = -1
     root = Node(board, player_id, -1)
@@ -120,4 +122,4 @@ def ai_move(board, player_id):
         move = randint(0, 24)
 
     board[move] = player_id
-    print(f"Calls to minimax_ab: {boards}")
+    print(f"Calls to mcts: {boards}")
