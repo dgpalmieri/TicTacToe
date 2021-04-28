@@ -167,7 +167,7 @@ def ai_move(board, player_id, algorithm):
 
     if algorithm == "minimax":
 
-        move, _ = minimax_ab(board, player_id, 6, True)
+        move, _ = minimax_ab(board, player_id, 5, True)
 
         if move is None:
             move = randint(0, 24)
