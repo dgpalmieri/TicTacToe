@@ -112,13 +112,12 @@ def save_game(path, board_list):
 def game(board, path, player):
     """
     This function contains the main game loop for the tictactoe module.
-    TODO: clean up this function
     """
     board_list = []
 
     empty_board = []
     for _ in range(25):
-        empty_board.append(" ")
+        empty_board.append(' ')
 
     turn = 'X'
 
@@ -126,24 +125,24 @@ def game(board, path, player):
         num_x = board.count('X')
         num_o = board.count('O')
 
-        if num_x == num_o:
+        if num_x != num_o:
             turn = 'O'
 
     print("Based on the state of the board, I can see that ", end="")
-    print("it is {}'s turn.".format(turn))
+    print(f"it is {turn}'s turn.")
 
     while True:
         board_list.append(board.copy())
 
         print("This is the current board state:")
         print_board(board)
-        print("It is \'{}\' player's move:".format(turn))
+        print(f"It is \'{turn}\' player's move:")
 
         if (turn == 'O' and player == '2') or player == '3':
             ai.ai_move(board, turn)
 
         else:
-            print("Where would you like to place your \'{}\'?".format(turn))
+            print(f"Where would you like to place your \'{turn}\'?")
             print("Format your move as a number between 1 and 25, ", end="")
             print("and 25 being the bottom right. If you ", end="")
             print("would like to save and quit, please ", end="")
@@ -155,7 +154,7 @@ def game(board, path, player):
                 return
 
             move = int(move) - 1
-            if (0 <= move <= 24 and board[move] not in ('X', 'O')):
+            if 0 <= move <= 24 and board[move] not in ('X', 'O'):
                 board[move] = turn
             else:
                 print("Please enter a valid move.")

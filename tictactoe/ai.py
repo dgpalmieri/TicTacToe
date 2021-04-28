@@ -16,6 +16,7 @@ import game
 
 boards = 0
 
+
 def minimax_ab(board, player_id, depth, maximize, alpha=-inf, beta=-inf) -> (int, int):
     """
     # Minimax_ab
