@@ -103,7 +103,7 @@ def main():
             print("Which algorithm would you like the AI to use?")
             print("[1] Minimax.")
             print("[2] Monte-Carlo Tree Search")
-            algorithm_one = input("Please choose either 1 or 2")
+            algorithm_one = input("Please choose either 1 or 2: ")
             if algorithm_one not in ('1', '2'):
                 print("Please choose again.")
                 continue
@@ -112,7 +112,7 @@ def main():
             print("Which algorithm would you like the second AI to use?")
             print("[1] Minimax.")
             print("[2] Monte-Carlo Tree Search")
-            algorithm_two = input("Please choose either 1 or 2")
+            algorithm_two = input("Please choose either 1 or 2: ")
             if algorithm_two not in ('1', '2'):
                 print("Please choose again.")
                 continue
