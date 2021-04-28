@@ -109,7 +109,7 @@ def save_game(path, board_list):
     print("Your game has been saved as {}".format(path))
 
 
-def game(board, path, player):
+def game(board, path, player, algorithm_one="", algorithm_two=""):
     """
     This function contains the main game loop for the tictactoe module.
     """
@@ -139,7 +139,10 @@ def game(board, path, player):
         print(f"It is \'{turn}\' player's move:")
 
         if (turn == 'O' and player == '2') or player == '3':
-            ai.ai_move(board, turn)
+            if (player == '3' and turn == 'X') or player == '2':
+                ai.ai_move(board, turn, algorithm_one)
+            elif player == '3' and turn == 'O':
+                ai.ai_move(board, turn, algorithm_two)
 
         else:
             print(f"Where would you like to place your \'{turn}\'?")

@@ -19,63 +19,13 @@ import game
 boards = 0
 
 
-def minimax_ab(board, player_id, depth, maximize, alpha=-inf, beta=-inf) -> (int, int):
-    """
-    # Minimax_ab
-
-    This function implements a minimax game tree search with alpha/beta
-    pruning.
-
-    It returns a tuple of (int, int), which represents the most optimal
-    move and that move's score, which is a sum of the different weights
-    of the boards.
-
-    The board weights are determined by the fastest possible win states.
-    """
-    winner = game.check_win(board)
-    if winner == player_id:
-        return None, 10 + depth
-    if winner not in (' ', "draw"):
-        return None, -10 - depth
-    if winner == "draw":
-        return None, 0
-    if depth == 0:
-        return None, None
-
-    global boards
-    boards += 1
-
-    best_move = None
-    value = None
-
-    for i in range(25):
-        if board[i] == ' ':
-            board[i] = player_id
-            _, value = minimax_ab(board,
-                                  'O' if player_id == 'X' else 'X',
-                                  depth - 1,
-                                  False,
-                                  alpha,
-                                  beta)
-            board[i] = ' '
-            if (value is not None
-               and (value > alpha if maximize else value < beta)):
-                if maximize:
-                    alpha = value
-                else:
-                    beta = value
-                if (alpha != -inf and beta != inf
-                   and alpha >= beta if maximize else beta >= alpha):
-                    break
-                best_move = i
-
-    if maximize:
-        return best_move, alpha
-
-    return best_move, beta
-
-
 class Node:
+    """
+    # Node
+    The Node class defines a node in a
+    Monte-Carlo Search Tree, with all
+    requisite parameters.
+    """
     def __init__(self, board, player_id, move):
         self.wins = 0.0
         self.games = 0.0
@@ -88,7 +38,7 @@ class Node:
 def mcts(node, expanding=False):
     """
     # mcts
-    This function implements a Monte-Carlo Tree Search.
+    This function implements Monte-Carlo Tree Search.
     """
     global boards
     boards += 1
@@ -151,7 +101,63 @@ def mcts(node, expanding=False):
             node.games += child.games
 
 
-def ai_move(board, player_id):
+def minimax_ab(board, player_id, depth, maximize, alpha=-inf, beta=-inf) -> (int, int):
+    """
+    # Minimax_ab
+
+    This function implements a minimax game tree search with alpha/beta
+    pruning.
+
+    It returns a tuple of (int, int), which represents the most optimal
+    move and that move's score, which is a sum of the different weights
+    of the boards.
+
+    The board weights are determined by the fastest possible win states.
+    """
+    winner = game.check_win(board)
+    if winner == player_id:
+        return None, 10 + depth
+    if winner not in (' ', "draw"):
+        return None, -10 - depth
+    if winner == "draw":
+        return None, 0
+    if depth == 0:
+        return None, None
+
+    global boards
+    boards += 1
+
+    best_move = None
+    value = None
+
+    for i in range(25):
+        if board[i] == ' ':
+            board[i] = player_id
+            _, value = minimax_ab(board,
+                                  'O' if player_id == 'X' else 'X',
+                                  depth - 1,
+                                  False,
+                                  alpha,
+                                  beta)
+            board[i] = ' '
+            if (value is not None
+                    and (value > alpha if maximize else value < beta)):
+                if maximize:
+                    alpha = value
+                else:
+                    beta = value
+                if (alpha != -inf and beta != inf
+                    and alpha >= beta if maximize else beta >= alpha):
+                    break
+                best_move = i
+
+    if maximize:
+        return best_move, alpha
+
+    return best_move, beta
+
+
+def ai_move(board, player_id, algorithm):
     """
     ai_move is a wrapper for the minimax_ab function.
     """
@@ -159,39 +165,35 @@ def ai_move(board, player_id):
     global boards
     boards = 0
 
-    move, _ = minimax_ab(board, player_id, 6, True)
+    if algorithm == "minimax":
 
-    if move is None:
-        move = randint(0, 24)
+        move, _ = minimax_ab(board, player_id, 6, True)
 
-    board[move] = player_id
-    print(f"Calls to minimax_ab: {boards}")
+        if move is None:
+            move = randint(0, 24)
 
-    """
-    # ai_move
-    ai_move is a wrapper for the mcts function.
+        board[move] = player_id
+        print(f"Calls to minimax_ab: {boards}")
 
-    global boards
+    elif algorithm == "mcts":
 
-    move = -1
-    root = Node(board, player_id, -1)
-    start = time.time()
-    turn_length = 15
-    while time.time() < start + turn_length:
-        mcts(root)
+        move = -1
+        root = Node(board, player_id, -1)
+        start = time.time()
+        turn_length = 15
+        while time.time() < start + turn_length:
+            mcts(root)
 
-    best_score = -inf
-    print(f"length of children: {len(root.children)}")
-    for child in root.children:
-        if child.wins / child.games > best_score:
-            move = child.move
-            best_score = child.wins / child.games
+        best_score = -inf
+        print(f"length of children: {len(root.children)}")
+        for child in root.children:
+            if child.wins / child.games > best_score:
+                move = child.move
+                best_score = child.wins / child.games
 
-    if move == -1:
-        print("Random move")
-        move = randint(0, 24)
+        if move == -1:
+            print("Random move")
+            move = randint(0, 24)
 
-    board[move] = player_id
-    print(f"Calls to mcts: {boards}")
-    """
-
+        board[move] = player_id
+        print(f"Calls to mcts: {boards}")

@@ -82,7 +82,7 @@ def main():
             continue
 
         if option == '4':
-            exit()
+            break
 
         print("Would you like to play against:")
         print("[1] A human player.")
@@ -90,13 +90,37 @@ def main():
         print("[3] I'd like to watch two AI players play.")
         print("[4] Exit the game.")
         player = input("Please choose either 1, 2, 3, or 4: ")
-        if player not in ('1', '2', '3'):
-            if player == "4":
-                break
+        if player not in ('1', '2', '3', '4'):
             print("Please choose again.")
             continue
 
-        game(board, path, player)
+        if player == '4':
+            break
+
+        algorithm_one = ""
+        algorithm_two = ""
+        if player == '2' or player == '3':
+            print("Which algorithm would you like the AI to use?")
+            print("[1] Minimax.")
+            print("[2] Monte-Carlo Tree Search")
+            algorithm_one = input("Please choose either 1 or 2")
+            if algorithm_one not in ('1', '2'):
+                print("Please choose again.")
+                continue
+
+        if player == '3':
+            print("Which algorithm would you like the second AI to use?")
+            print("[1] Minimax.")
+            print("[2] Monte-Carlo Tree Search")
+            algorithm_two = input("Please choose either 1 or 2")
+            if algorithm_two not in ('1', '2'):
+                print("Please choose again.")
+                continue
+
+        algorithm_one = "minimax" if algorithm_one == '1' else "mcts"
+        algorithm_two = "minimax" if algorithm_two == '1' else "mcts"
+
+        game(board, path, player, algorithm_one, algorithm_two)
 
     print("Goodbye.")
 
